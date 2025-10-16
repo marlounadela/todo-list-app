@@ -1,11 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for
+import os
 import sqlite3
 
 app = Flask(__name__)
 
+# Use a writable path when running on serverless platforms like Vercel
+def get_database_path() -> str:
+    writable_dir = os.environ.get('DB_DIR', '/tmp')
+    return os.path.join(writable_dir, 'todo.db')
+
 # Database setup function
 def init_db():
-    conn = sqlite3.connect('todo.db')
+    db_path = get_database_path()
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
     c.execute('''
     CREATE TABLE IF NOT EXISTS tasks (
@@ -20,7 +28,7 @@ def init_db():
 # Home page: List tasks
 @app.route('/')
 def index():
-    conn = sqlite3.connect('todo.db')
+    conn = sqlite3.connect(get_database_path())
     c = conn.cursor()
     c.execute('SELECT * FROM tasks')
     tasks = c.fetchall()
@@ -32,7 +40,7 @@ def index():
 def add_task():
     task = request.form['task']
     if task:
-        conn = sqlite3.connect('todo.db')
+        conn = sqlite3.connect(get_database_path())
         c = conn.cursor()
         c.execute('INSERT INTO tasks (task) VALUES (?)', (task,))
         conn.commit()
@@ -42,7 +50,7 @@ def add_task():
 # Delete task
 @app.route('/delete/<int:id>', methods=['GET'])
 def delete_task(id):
-    conn = sqlite3.connect('todo.db')
+    conn = sqlite3.connect(get_database_path())
     c = conn.cursor()
     c.execute('DELETE FROM tasks WHERE id = ?', (id,))
     conn.commit()
@@ -52,7 +60,7 @@ def delete_task(id):
 # Update task (update name)
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update_task(id):
-    conn = sqlite3.connect('todo.db')
+    conn = sqlite3.connect(get_database_path())
     c = conn.cursor()
     
     if request.method == 'POST':
@@ -71,7 +79,7 @@ def update_task(id):
 # Mark task as done
 @app.route('/done/<int:id>', methods=['POST'])
 def mark_done(id):
-    conn = sqlite3.connect('todo.db')
+    conn = sqlite3.connect(get_database_path())
     c = conn.cursor()
     c.execute('UPDATE tasks SET is_done = 1 WHERE id = ?', (id,))
     conn.commit()
@@ -88,6 +96,8 @@ def mark_undone(id):
     conn.close()
     return redirect(url_for('index'))
 
+# Initialize database on import (safe to run repeatedly)
+init_db()
+
 if __name__ == '__main__':
-    init_db()  # Initialize the database
     app.run(debug=True)
