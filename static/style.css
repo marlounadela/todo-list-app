@@ -1,0 +1,277 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f3f4f6; /* Light background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+/* Main container */
+.container {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    text-align: center;
+}
+
+/* Heading */
+h1 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Add Task Form */
+.add-task-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.add-task-form input {
+    width: 80%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.add-task-form input:focus {
+    border-color: #4CAF50;
+}
+
+.add-task-form button {
+    width: 20%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.add-task-form button:hover {
+    background-color: #45a049;
+}
+
+/* Task List */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.task-card {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.task-card.completed {
+    background-color: #eaeaea;
+    text-decoration: line-through;
+    color: #888;
+}
+
+.task-name {
+    font-size: 18px;
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+.btn-update {
+    background-color: #f39c12;
+}
+
+.btn-update:hover {
+    background-color: #e67e22;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+/* Radio button styles */
+input[type="radio"] {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+input[type="radio"]:checked {
+    background-color: #4CAF50;
+}
+
+/* Update Task Page */
+.update-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.update-card {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.update-card h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+.update-form input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.update-form input:focus {
+    border-color: #4CAF50;
+}
+
+.update-form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.update-form button:hover {
+    background-color: #45a049;
+}
+
+.back-link {
+    margin-top: 20px;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #2980b9;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .add-task-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-task-form button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .task-card {
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .actions {
+        margin-top: 10px;
+        justify-content: flex-start;
+    }
+
+    /* Update page responsiveness */
+    .update-card {
+        padding: 30px;
+    }
+
+    .update-card h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .update-form input {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .update-form button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .btn-back {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+}
